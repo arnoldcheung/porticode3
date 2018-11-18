@@ -4,6 +4,7 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
+
 <html>
 	<head>
 		<title>Donate</title>
@@ -40,7 +41,25 @@
 									</div>
 								</div>
 								<ul class="actions special">
-									<li><a href="donate.html" class="button">Donate</a></li>
+									<li>
+										<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+										<script type=text/javascript>
+										        $(function() {
+										          $('a#donate').bind('click', function() {
+										            $.getJSON('/donate/',
+										                function(data) {
+										              //do nothing
+										            });
+										            return false;
+										          });
+										        });
+										</script>
+										<div class='container'>
+										    <form>
+										        <a href=donate.html id=donate><button class='btn btn-default'>DONATE</button></a>
+										    </form>
+										</div>
+									</li>
 								</ul>
 							</form>
 							<hr />
