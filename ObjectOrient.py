@@ -79,6 +79,7 @@ class player():
         self.walkCount = 0
         #Character attributes
         self.exp = 0
+        self.addEXP = False
         self.level = 1
         #Walking sprites animation
         self.walkRight = []
@@ -111,6 +112,15 @@ class player():
         else:
             win.blit(charSprite, (self.x, self.y), (64, 0, 64, 64))  # Default sprit into window (image, (position), (starting crop, end crop)
 
+    #Donation gives exp
+    def donation(self):
+        self.addEXP = False
+        if self.exp < 10:
+            self.exp += 2
+        else:
+            self.exp = 0
+            self.level += 1
+
 # Drawing character
 def redrawGameWindow():     #Function of character update
 
@@ -121,19 +131,25 @@ def redrawGameWindow():     #Function of character update
     #Putting images in window
     win.blit(scaled_bg, (0, 0))  #Background
     win.blit(ScaledButUp, (300, 150)) #Buttonup
-    #pygame.draw.AAfilledRoundedRect(win, (10, 10, 100, 100), (255, 255, 255),  0.5)
+    buttonArea = pygame.Rect(300, 150, 75, 75)
+
+    #Putting characters in window
     man.draw(win)
     teostra.draw(win)
     #rathian.draw(win)
 
     #Hold mouse down to click button
-    if event.type == pygame.MOUSEBUTTONDOWN:
-        pygame.draw.rect(win, (0, 0, 0), (10, 10, 100, 100))
-        win.blit(ScaledButDown, (300, 150))
+    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  #Mousebutton down and is left mouse button
+        pos = pygame.mouse.get_pos()    #Get mouse position
+        if buttonArea.collidepoint(pos):
+            pygame.draw.rect(win, (0, 0, 0), (10, 10, 100, 100))
+            win.blit(ScaledButDown, (300, 150))
+            man.addEXP = True
+
 
     #Experience bar
-    pygame.draw.rect(win, (255, 255, 25), (man.x+9, man.y-11, 50, 10))      #draw rectangle, (in window, colour, position, size)
     pygame.draw.rect(win, (179, 149, 0),  (man.x+9, man.y-11, 50, 10))
+    pygame.draw.rect(win, (255, 255, 25), (man.x+9, man.y-11, 0 + man.exp * 5, 10))      #draw rectangle, (in window, colour, position, size)
 
     #Level counter
     text = font.render('Lv. ' + str(man.level), 1, (0, 0, 0))
@@ -147,6 +163,7 @@ def redrawGameWindow():     #Function of character update
 man = player(50, 180, 64, 64)
 teostra = monster(350, 100, 256, 192, 1, monster01, 14, 5, 3)
 rathian = monster(350, 150, 256, 256, 1, monster02, 10, 5, 2)
+
 font = pygame.font.SysFont('Arial', 12, True)   #Define font type, size, bold, italics
 run = True
 while run:
@@ -198,8 +215,8 @@ while run:
         man.down = False
         '''
 
-
     redrawGameWindow()  #Call func for character update
+
 
 
 pygame.quit()
