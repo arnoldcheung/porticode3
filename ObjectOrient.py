@@ -16,6 +16,8 @@ monster01 = pygame.image.load("teostra.png")
 monster01 = pygame.transform.scale(monster01,(1280,576))
 player02 = pygame.image.load("player02.png")
 player02 = pygame.transform.scale(player02,(1020,426))
+monster02 = pygame.image.load('rathian.png')
+monster02 = pygame.transform.scale(monster02,(1280,512))
 
 #Create array of walking direction sprites
 '''
@@ -122,6 +124,7 @@ def redrawGameWindow():     #Function of character update
     #pygame.draw.AAfilledRoundedRect(win, (10, 10, 100, 100), (255, 255, 255),  0.5)
     man.draw(win)
     teostra.draw(win)
+    #rathian.draw(win)
 
     #Hold mouse down to click button
     if event.type == pygame.MOUSEBUTTONDOWN:
@@ -143,6 +146,7 @@ def redrawGameWindow():     #Function of character update
 
 man = player(50, 180, 64, 64)
 teostra = monster(350, 100, 256, 192, 1, monster01, 14, 5, 3)
+rathian = monster(350, 150, 256, 256, 1, monster02, 10, 5, 2)
 font = pygame.font.SysFont('Arial', 12, True)   #Define font type, size, bold, italics
 run = True
 while run:
@@ -151,6 +155,7 @@ while run:
 
     #Monster idle loop
     teostra.idleCount += 1
+    rathian.idleCount += 1
 
     #Checking for events
     for event in pygame.event.get():
