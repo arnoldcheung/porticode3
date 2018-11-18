@@ -141,7 +141,7 @@ def redrawGameWindow():     #Function of character update
 # Main loop
 
 
-man = player(50, 50, 64, 64)
+man = player(50, 180, 64, 64)
 teostra = monster(350, 100, 256, 192, 1, monster01, 14, 5, 3)
 font = pygame.font.SysFont('Arial', 12, True)   #Define font type, size, bold, italics
 run = True
@@ -159,25 +159,25 @@ while run:
 
     keys = pygame.key.get_pressed()    #create list of keys, origin in top left corner
 
-    if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+    if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and man.x > man.vel:
         man.x -= man.vel
         man.left = True
         man.right = False
         man.up = False
         man.down = False
-    elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+    elif (keys[pygame.K_RIGHT] or keys[pygame.K_d]) and man.x < 640 - man.width - man.vel :
         man.x += man.vel
         man.left = False
         man.right = True
         man.up = False
         man.down = False
-    elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
+    elif (keys[pygame.K_DOWN] or keys[pygame.K_s]) and man.y < 270 - man.width - man.vel:
         man.y += man.vel
         man.left = False
         man.right = False
         man.up = False
         man.down = True
-    elif keys[pygame.K_UP] or keys[pygame.K_w]:
+    elif (keys[pygame.K_UP] or keys[pygame.K_w]) and man.y > 230 - man.width - man.vel:
         man.y -= man.vel
         man.left = False
         man.right = False
