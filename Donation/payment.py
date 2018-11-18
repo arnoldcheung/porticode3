@@ -48,6 +48,7 @@ def donate(origin, destination, amount, name):
 
     #print(transfer_request_receipt)
 
+    '''
     filters = {
         "fromDate": "2018-11-16",
         "toDate": "2018-11-18",
@@ -62,13 +63,14 @@ def donate(origin, destination, amount, name):
 
     for transfer in transfers:
         print(transfer['transferRequestId'] + " " + transfer['memo'])
+    '''
 
-    print("You Donated {} {} to {}!".format(transfer_request_receipt['transferAmount'],
-                                            transfer_request_receipt['currencyCode'],
-                                            name))
+    print("You Donated {} {} to {}!".format(amount, "USD", name))
 
+    man.add_experience()
 
-donate(user_account, charity_account_1, 1, "Unicef")
+if __name__ == '__main__':
+    donate(user_account, charity_account_1, 1, "Unicef")
 
 
 
