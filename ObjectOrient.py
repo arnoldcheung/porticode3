@@ -12,6 +12,11 @@ buttonUp = pygame.image.load("buttonup.png")     #Buttonup image
 ScaledButUp = pygame.transform.scale(buttonUp, (75,75))
 buttonDown = pygame.image.load("buttondown.png") #Buttondown image
 ScaledButDown = pygame.transform.scale(buttonDown,(75,75))
+monster01 = pygame.image.load("teostra.png")
+monster01 = pygame.transform.scale(monster01,(1280,576))
+player02 = pygame.image.load("player02.png")
+player02 = pygame.transform.scale(player02,(1020,426))
+
 #Create array of walking direction sprites
 '''
 walkRight = []
@@ -27,6 +32,34 @@ for i in range(3):
 
 #Ingame clock
 clock = pygame.time.Clock()
+class monster():
+    def __init__(self, x, y, width, height, level, monSprite, numSprites, numSpritesPerRow, numRows):
+        #Geometry and physics
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        #Idle loop variables
+        self.idleCount = 0
+        #Monster attributes
+        self.level = level
+        #Idle sprites animation
+        self.sprites = []
+        self.numSprites = numSprites
+        spriteCount = 0
+        for i in range(numSpritesPerRow):
+            for j in range(numRows):
+                self.sprites.append(monSprite.subsurface(i*self.width, j*self.height, self.width, self.height))
+                spriteCount += 1
+                if spriteCount == numSprites:
+                    break
+
+    def draw(self,win):
+        # Cycling idle sprites
+        if self.idleCount >= self.numSprites :
+            self.idleCount = 0
+
+        win.blit(self.sprites[self.idleCount],(self.x, self.y))
 
 class player():
     def __init__(self, x, y, width, height):
@@ -36,7 +69,7 @@ class player():
         self.width = width
         self.height = height
         #Movespeed variables
-        self.vel = 5
+        self.vel = 10
         self.left = False
         self.right = False
         self.up = False
@@ -45,7 +78,7 @@ class player():
         #Character attributes
         self.exp = 0
         self.level = 1
-
+        #Walking sprites animation
         self.walkRight = []
         self.walkLeft = []
         self.walkUp = []
@@ -86,8 +119,9 @@ def redrawGameWindow():     #Function of character update
     #Putting images in window
     win.blit(scaled_bg, (0, 0))  #Background
     win.blit(ScaledButUp, (300, 150)) #Buttonup
-    pygame.draw.AAfilledRoundedRect(win, (10, 10, 100, 100), (255, 255, 255),  0.5)
+    #pygame.draw.AAfilledRoundedRect(win, (10, 10, 100, 100), (255, 255, 255),  0.5)
     man.draw(win)
+    teostra.draw(win)
 
     #Hold mouse down to click button
     if event.type == pygame.MOUSEBUTTONDOWN:
@@ -108,11 +142,16 @@ def redrawGameWindow():     #Function of character update
 
 
 man = player(50, 50, 64, 64)
+teostra = monster(350, 100, 256, 192, 1, monster01, 14, 5, 3)
 font = pygame.font.SysFont('Arial', 12, True)   #Define font type, size, bold, italics
 run = True
 while run:
     #pygame.time.delay(100)  #ingame clock, in milliseconds
     clock.tick(10)
+
+    #Monster idle loop
+    teostra.idleCount += 1
+
     #Checking for events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
