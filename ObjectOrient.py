@@ -49,8 +49,8 @@ class monster():
         self.sprites = []
         self.numSprites = numSprites
         spriteCount = 0
-        for i in range(numSpritesPerRow):
-            for j in range(numRows):
+        for j in range(numRows):
+            for i in range(numSpritesPerRow):
                 self.sprites.append(monSprite.subsurface(i*self.width, j*self.height, self.width, self.height))
                 spriteCount += 1
                 if spriteCount == numSprites:
@@ -136,7 +136,7 @@ def redrawGameWindow():     #Function of character update
     #Putting characters in window
     man.draw(win)
     teostra.draw(win)
-    #rathian.draw(win)
+    rathian.draw(win)
 
     #Hold mouse down to click button
     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  #Mousebutton down and is left mouse button
@@ -162,13 +162,13 @@ def redrawGameWindow():     #Function of character update
 
 man = player(50, 180, 64, 64)
 teostra = monster(350, 100, 256, 192, 1, monster01, 14, 5, 3)
-rathian = monster(350, 150, 256, 256, 1, monster02, 10, 5, 2)
+rathian = monster(70, -50, 256, 256, 1, monster02, 10, 5, 2)
 
 font = pygame.font.SysFont('Arial', 12, True)   #Define font type, size, bold, italics
 run = True
 while run:
     #pygame.time.delay(100)  #ingame clock, in milliseconds
-    clock.tick(10)
+    clock.tick(60)
 
     #Monster idle loop
     teostra.idleCount += 1
