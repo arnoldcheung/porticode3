@@ -1,6 +1,4 @@
 import pygame
-import rounded_rect
-
 pygame.init()       #initialize pygame
 
 win = pygame.display.set_mode((640, 359))   #create window of 500x500
@@ -88,12 +86,12 @@ def redrawGameWindow():     #Function of character update
     #Putting images in window
     win.blit(scaled_bg, (0, 0))  #Background
     win.blit(ScaledButUp, (300, 150)) #Buttonup
-    rounded_rect.AAfilledRoundedRect(win, (10, 10, 100, 100), (255, 255, 255),  0.2)
+    pygame.draw.AAfilledRoundedRect(win, (10, 10, 100, 100), (255, 255, 255),  0.5)
     man.draw(win)
 
     #Hold mouse down to click button
     if event.type == pygame.MOUSEBUTTONDOWN:
-        rounded_rect.AAfilledRoundedRect(win, (10, 10, 100, 100), (0, 0, 0), 0.2)
+        pygame.draw.rect(win, (0, 0, 0), (10, 10, 100, 100))
         win.blit(ScaledButDown, (300, 150))
 
     #Experience bar

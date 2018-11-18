@@ -25,7 +25,7 @@ for i in range(3):
     walkDown.append(charSprite.subsurface(i*64,0,64,64))
 #Create array of monster idle sprites
 monsterIdle = []
-for i in range (4):
+for i in range(3):
     monsterIdle.append(monster.subsurface(i*267,0,267,178))
 
 
@@ -49,10 +49,12 @@ right = False
 up = False
 down = False
 walkCount = 0
+idleCount = 1
 
 # Drawing character
 def redrawGameWindow():     #Function of character update
     global walkCount    #Take walkCount as global variable
+    global idleCount    #Take idleCount as global variable
 
     #Rookie test
     #win.fill((0, 0, 0))  # fill the window with black so that character doesnt duplicate
@@ -65,6 +67,11 @@ def redrawGameWindow():     #Function of character update
     #Cycling walking sprites
     if walkCount + 1 >= 4:
         walkCount = 0
+
+    #Cycling idling sprites
+    if idleCount + 1 >= 4:
+        idleCount = 1
+
     #Call walking sprites
     if left:
         win.blit(walkLeft[walkCount],(x,y))
@@ -95,7 +102,7 @@ def redrawGameWindow():     #Function of character update
     win.blit(text, (x+9,y-13))
 
     #Monster sprite
-    win.blit(monsterIdle[walkCount],(380,100))
+    win.blit(monsterIdle[idleCount],(380,100))
 
     pygame.display.update()  # Update game
 
@@ -105,6 +112,10 @@ run = True
 while run:
     #pygame.time.delay(100)  #ingame clock, in milliseconds
     clock.tick(9)
+
+    #MonsterIdle Loop
+    idleCount += 1
+
     #Checking for events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
